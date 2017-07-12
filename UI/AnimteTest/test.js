@@ -86,110 +86,8 @@ p._updateVisibility = _updateVisibility;
 
 
 
-(lib.an_RadioButton = function(options) {
-	this._element = new $.an.RadioButton(options);
-	this._el = this._element.create();
-	var $this = this;
-	this.addEventListener('added', function() {
-		$this._lastAddedFrame = $this.parent.currentFrame;
-		$this._element.attach($('#dom_overlay_container'));
-	});
-}).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(0,0,100,22);
-
-p._tick = _tick;
-p._handleDrawEnd = _handleDrawEnd;
-p._updateVisibility = _updateVisibility;
-
-
-
-(lib.an_NumericStepper = function(options) {
-	this._element = new $.an.NumericStepper(options);
-	this._el = this._element.create();
-	var $this = this;
-	this.addEventListener('added', function() {
-		$this._lastAddedFrame = $this.parent.currentFrame;
-		$this._element.attach($('#dom_overlay_container'));
-	});
-}).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(0,0,120,22);
-
-p._tick = _tick;
-p._handleDrawEnd = _handleDrawEnd;
-p._updateVisibility = _updateVisibility;
-
-
-
-(lib.an_List = function(options) {
-	this._element = new $.an.List(options);
-	this._el = this._element.create();
-	var $this = this;
-	this.addEventListener('added', function() {
-		$this._lastAddedFrame = $this.parent.currentFrame;
-		$this._element.attach($('#dom_overlay_container'));
-	});
-}).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(0,0,100,100);
-
-p._tick = _tick;
-p._handleDrawEnd = _handleDrawEnd;
-p._updateVisibility = _updateVisibility;
-
-
-
 (lib.an_Label = function(options) {
 	this._element = new $.an.Label(options);
-	this._el = this._element.create();
-	var $this = this;
-	this.addEventListener('added', function() {
-		$this._lastAddedFrame = $this.parent.currentFrame;
-		$this._element.attach($('#dom_overlay_container'));
-	});
-}).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(0,0,100,22);
-
-p._tick = _tick;
-p._handleDrawEnd = _handleDrawEnd;
-p._updateVisibility = _updateVisibility;
-
-
-
-(lib.an_Image = function(options) {
-	this._element = new $.an.Image(options);
-	this._el = this._element.create();
-	var $this = this;
-	this.addEventListener('added', function() {
-		$this._lastAddedFrame = $this.parent.currentFrame;
-		$this._element.attach($('#dom_overlay_container'));
-	});
-}).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(0,0,100,100);
-
-p._tick = _tick;
-p._handleDrawEnd = _handleDrawEnd;
-p._updateVisibility = _updateVisibility;
-
-
-
-(lib.an_ComboBox = function(options) {
-	this._element = new $.an.ComboBox(options);
-	this._el = this._element.create();
-	var $this = this;
-	this.addEventListener('added', function() {
-		$this._lastAddedFrame = $this.parent.currentFrame;
-		$this._element.attach($('#dom_overlay_container'));
-	});
-}).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(0,0,100,22);
-
-p._tick = _tick;
-p._handleDrawEnd = _handleDrawEnd;
-p._updateVisibility = _updateVisibility;
-
-
-
-(lib.an_Checkbox = function(options) {
-	this._element = new $.an.Checkbox(options);
 	this._el = this._element.create();
 	var $this = this;
 	this.addEventListener('added', function() {
@@ -226,47 +124,77 @@ p._updateVisibility = _updateVisibility;
 (lib.test = function(mode,startPosition,loop) {
 	this.initialize(mode,startPosition,loop,{});
 
+	// timeline functions:
+	this.frame_0 = function() {
+		/* 文本输入控件的文本更改事件
+		对 TextInput 控件文本的任何更改都会执行此函数，您可在函数中添加自己的自定义代码。
+		
+		说明:
+		1. 在以下"// 开始您的自定义代码"行后的新行上添加您的自定义代码。
+		*/
+		if(!this.test_change_cbk) {
+			function test_change(evt) {
+				// 开始您的自定义代码
+				console.log(evt.target.value);
+				// 结束您的自定义代码
+			}
+			$("#dom_overlay_container").on("change", "#test", test_change.bind(this));
+			this.test_change_cbk = true;
+		}
+		
+		/* Mouse Click 事件
+		单击此指定的元件实例会执行您可在其中添加自己的自定义代码的函数。
+		
+		说明:
+		1. 在以下"// 开始您的自定义代码"行后的新行上添加您的自定义代码。
+		单击此元件实例时，此代码将执行。
+		*/
+		
+		this.test.addEventListener("click", fl_MouseClickHandler.bind(this));
+		
+		function fl_MouseClickHandler()
+		{
+			// 开始您的自定义代码
+			// 此示例代码在"输出"面板中显示"已单击鼠标"。
+			alert("已单击鼠标");
+			// 结束您的自定义代码
+			lab.Label="MouseClicked";
+		}
+		
+		
+		/* 单击按钮事件
+		单击指定按钮会执行此函数，您可在此函数中添加自己的自定义代码。
+		
+		说明:
+		1. 在以下"// 开始您的自定义代码"行后的新行上添加您的自定义代码。
+		*/
+		
+		<a href="#" onclick="blu_event('click_me','hello there!')">Click me!</a>
+	}
+
+	// actions tween:
+	this.timeline.addTween(cjs.Tween.get(this).call(this.frame_0).wait(1));
+
+	// Actions
+	this.movieClip_1 = new lib.an_Button({'id': 'movieClip_1', 'label':'Button', 'disabled':false, 'visible':true, 'class':'ui-button'});
+
+	this.movieClip_1.setTransform(814.8,527.2,1,1,0,0,0,50,11);
+
+	this.timeline.addTween(cjs.Tween.get(this.movieClip_1).wait(1));
+
 	// 图层 1
-	this.instance = new lib.an_TextInput({'id': '', 'value':'', 'disabled':false, 'visible':true, 'class':'ui-textinput'});
+	this.lab = new lib.an_Label({'id': 'lab', 'label':'Label', 'disabled':false, 'visible':true, 'class':'ui-label'});
 
-	this.instance.setTransform(468.5,329.3,1,1,0,0,0,50,11);
+	this.lab.setTransform(559.2,481.5,1,1,0,0,0,50,11);
 
-	this.instance_1 = new lib.an_RadioButton({'id': 'instance_1', 'label':'Radio', 'value':'', 'name':'radio', 'disabled':false, 'visible':true, 'class':'ui-radiobutton'});
+	this.test = new lib.an_TextInput({'id': 'test', 'value':'test', 'disabled':false, 'visible':true, 'class':'ui-textinput'});
 
-	this.instance_1.setTransform(342,329.3,1,1,0,0,0,50,11);
+	this.test.setTransform(609.2,554.7,2,2.727,0,0,0,50,11);
 
-	this.instance_2 = new lib.an_NumericStepper({'id': 'instance_2', 'value':'0', 'min':'0', 'max':'10', 'disabled':false, 'visible':true, 'class':'ui-numericstepper'});
-
-	this.instance_2.setTransform(534.3,297.7,1,1,0,0,0,60,11);
-
-	this.instance_3 = new lib.an_List({'id': 'instance_3', 'type':'Ordered', 'items':'dummy, dummy, items, 1, , 0, , , 0', 'disabled':false, 'visible':true, 'class':'ui-list'});
-
-	this.instance_3.setTransform(640.1,223.4,1,1,0,0,0,50,50);
-
-	this.instance_4 = new lib.an_Label({'id': 'instance_4', 'label':'Label', 'disabled':false, 'visible':true, 'class':'ui-label'});
-
-	this.instance_4.setTransform(385.7,296.1,1,1,0,0,0,50,11);
-
-	this.instance_5 = new lib.an_Image({'id': 'instance_5', 'src':'images/', 'alt':'image', 'border':'0', 'visible':true, 'class':'ui-image'});
-
-	this.instance_5.setTransform(524.3,223.4,1,1,0,0,0,50,50);
-
-	this.instance_6 = new lib.an_ComboBox({'id': 'instance_6', 'label':'', 'items':'dummy, dummy, items, 2, label, 0, , , data, 0, , , 6, 11, , label0, , label1, , label2, , label3, , label4, ', 'value':'0', 'disabled':false, 'visible':true, 'class':'ui-combobox'});
-
-	this.instance_6.setTransform(385.7,262.4,1,1,0,0,0,50,11);
-
-	this.instance_7 = new lib.an_Checkbox({'id': 'instance_7', 'label':'Checkbox', 'value':'', 'disabled':false, 'visible':true, 'class':'ui-checkbox'});
-
-	this.instance_7.setTransform(385.7,223.9,1,1,0,0,0,50,11);
-
-	this.instance_8 = new lib.an_Button({'id': 'instance_8', 'label':'Button', 'disabled':false, 'visible':true, 'class':'ui-button'});
-
-	this.instance_8.setTransform(395.3,189.6,1,1,0,0,0,50,11);
-
-	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.instance_8},{t:this.instance_7},{t:this.instance_6},{t:this.instance_5},{t:this.instance_4},{t:this.instance_3},{t:this.instance_2},{t:this.instance_1},{t:this.instance}]}).wait(1));
+	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.test},{t:this.lab}]}).wait(1));
 
 }).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(1251.5,712.9,399,167.9);
+p.nominalBounds = new cjs.Rectangle(1468.2,1010,357.1,116.1);
 // library properties:
 lib.properties = {
 	width: 1920,
@@ -279,13 +207,7 @@ lib.properties = {
 		{src:"https://code.jquery.com/jquery-2.2.4.min.js", id:"lib/jquery-2.2.4.min.js"},
 		{src:"components/sdk/anwidget.js", id:"sdk/anwidget.js"},
 		{src:"components/ui/src/textinput.js", id:"an.TextInput"},
-		{src:"components/ui/src/radiobutton.js", id:"an.RadioButton"},
-		{src:"components/ui/src/numericstepper.js", id:"an.NumericStepper"},
-		{src:"components/ui/src/list.js", id:"an.List"},
 		{src:"components/ui/src/label.js", id:"an.Label"},
-		{src:"components/ui/src/image.js", id:"an.Image"},
-		{src:"components/ui/src/combobox.js", id:"an.ComboBox"},
-		{src:"components/ui/src/checkbox.js", id:"an.Checkbox"},
 		{src:"components/ui/src/button.js", id:"an.Button"}
 	],
 	preloads: []
